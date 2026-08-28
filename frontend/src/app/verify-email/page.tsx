@@ -16,30 +16,47 @@ function VerifyEmailContent() {
 
   useEffect(() => {
     const url = searchParams.get('url');
+    let isMounted = true;
+
     if (!url) {
-      setStatus('error');
-      setMessage('Link de verificação inválido ou inexistente.');
+      setTimeout(() => {
+        if (isMounted) {
+          setStatus('error');
+          setMessage('Link de verificação inválido ou inexistente.');
+        }
+      }, 0);
       return;
     }
 
     const verify = async () => {
       try {
         const res = await api.post('/email/verify', { url });
-        setStatus('success');
-        setMessage(res.data.message || 'E-mail verificado com sucesso!');
+        if (isMounted) {
+          setStatus('success');
+          setMessage(res.data.message || 'E-mail verificado com sucesso!');
+        }
         await refreshUser();
         
         // Redirecionar para o dashboard após alguns segundos
         setTimeout(() => {
-          router.push('/');
+          if (isMounted) {
+            router.push('/');
+          }
         }, 3000);
-      } catch (err: any) {
-        setStatus('error');
-        setMessage(err.response?.data?.message || 'Falha ao verificar o e-mail. O link pode ter expirado.');
+      } catch (err) {
+        if (isMounted) {
+          setStatus('error');
+          const errorMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+          setMessage(errorMessage || 'Falha ao verificar o e-mail. O link pode ter expirado.');
+        }
       }
     };
 
     verify();
+
+    return () => {
+      isMounted = false;
+    };
   }, [searchParams, router, refreshUser]);
 
   return (
