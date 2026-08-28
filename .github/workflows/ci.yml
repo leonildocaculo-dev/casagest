@@ -49,7 +49,7 @@ jobs:
           DB_DATABASE: casagest_testing
           DB_USERNAME: casagest
           DB_PASSWORD: secret_password
-          APP_KEY: base64:VGhpcyJzQVNlY3JldEtleUZvckNhc2FHZXN0MTIzNA==
+          APP_KEY: base64:+diwJKwZ47k+4TaTCaT0YWF9W7TtWogYx010jKKZxTI=
         run: |
           cd backend
           php artisan test
