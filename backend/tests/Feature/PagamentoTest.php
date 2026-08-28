@@ -155,12 +155,16 @@ class PagamentoTest extends TestCase
             'estado' => 'pendente',
         ]);
 
+        config(['app.webhook_pagamentos_secret' => 'test-secret-pagamento']);
+
         // Simular callback do webhook
         $response = $this->postJson('/api/webhooks/pagamentos/referencia', [
             'entidade' => '10555',
             'referencia' => '912345678',
             'valor' => 500000.00,
             'status' => 'PAID',
+        ], [
+            'X-Webhook-Secret' => 'test-secret-pagamento'
         ]);
 
         $response->assertStatus(200)

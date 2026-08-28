@@ -23,12 +23,16 @@ it('updates contrato to assinado via webhook', function () {
     ]);
 
     // Simulate Autentique webhook payload for signed document
+    config(['app.webhook_autentique_secret' => 'test-secret']);
+    
     $response = postJson('/api/webhooks/autentique', [
         'event' => 'document.signed',
         'document' => [
             'id' => '1234567890',
             'name' => "Contrato_{$contrato->id}.pdf"
         ]
+    ], [
+        'X-Autentique-Token' => 'test-secret'
     ]);
 
     $response->assertStatus(200);

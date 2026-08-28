@@ -66,6 +66,11 @@ class WebhookPagamentoController extends Controller
             'resposta_webhook' => $request->all(),
         ]);
 
+        // Atualizar contrato
+        if ($pagamento->contrato) {
+            $pagamento->contrato->update(['estado' => 'assinado']);
+        }
+
         // Enviar recibo ao cliente
         if ($pagamento->cliente) {
             $pagamento->cliente->notify(new \App\Notifications\PagamentoRecebidoNotification($pagamento));
