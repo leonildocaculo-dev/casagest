@@ -15,7 +15,7 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_DB: casagest_test
+          POSTGRES_DB: casagest_testing
           POSTGRES_USER: casagest
           POSTGRES_PASSWORD: secret_password
         ports:
@@ -46,7 +46,7 @@ jobs:
           DB_CONNECTION: pgsql
           DB_HOST: 127.0.0.1
           DB_PORT: 5432
-          DB_DATABASE: casagest_test
+          DB_DATABASE: casagest_testing
           DB_USERNAME: casagest
           DB_PASSWORD: secret_password
           APP_KEY: base64:VGhpcyJzQVNlY3JldEtleUZvckNhc2FHZXN0MTIzNA==
