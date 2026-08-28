@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Base de dados PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: casagest_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: casagest
+      POSTGRES_USER: casagest_user
+      POSTGRES_PASSWORD: casagest_secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Backend Laravel API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: casagest_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: CasaGest
+      APP_ENV: production
+      APP_KEY: base64:VGhpcyJzQVNlY3JldEtleUZvckNhc2FHZXN0MTIzNA==
+      APP_DEBUG: "false"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: casagest
+      DB_USERNAME: casagest_user
+      DB_PASSWORD: casagest_secure_password
+      FRONTEND_URL: http://localhost:3000
+      SANCTUM_STATEFUL_DOMAINS: localhost:3000,localhost
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend/storage/app/public:/var/www/html/storage/app/public
+
+  # Frontend Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: casagest_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

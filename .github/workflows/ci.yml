@@ -1,0 +1,80 @@
+name: CasaGest CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  backend-tests:
+    name: Backend Tests (Laravel 11)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: casagest_test
+          POSTGRES_USER: casagest
+          POSTGRES_PASSWORD: secret_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_pgsql, gd, bcmath
+          coverage: none
+
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          composer install --prefer-dist --no-progress
+
+      - name: Prepare Environment & Run Tests
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: casagest_test
+          DB_USERNAME: casagest
+          DB_PASSWORD: secret_password
+          APP_KEY: base64:VGhpcyJzQVNlY3JldEtleUZvckNhc2FHZXN0MTIzNA==
+        run: |
+          cd backend
+          php artisan test
+
+  frontend-build:
+    name: Frontend Build & Typecheck (Next.js 15)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run Typecheck & Build
+        run: |
+          cd frontend
+          npm run test
+          npm run build
