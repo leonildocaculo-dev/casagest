@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     libpng-dev \
     libjpeg-turbo-dev \
     freetype-dev \
+    libzip-dev \
     zip \
     unzip \
     git \
@@ -16,7 +17,7 @@ RUN apk add --no-cache \
 
 # Configurar extensões PHP
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_pgsql gd bcmath
+    && docker-php-ext-install pdo pdo_pgsql gd bcmath zip
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
