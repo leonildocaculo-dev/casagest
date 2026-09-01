@@ -1,5 +1,5 @@
-import { resolveImageUrl } from '@/lib/utils';
 'use client';
+import { resolveImageUrl } from '@/lib/utils';
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';

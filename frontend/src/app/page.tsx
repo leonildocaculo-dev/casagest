@@ -1,5 +1,5 @@
-import { resolveImageUrl } from '@/lib/utils';
 'use client';
+import { resolveImageUrl } from '@/lib/utils';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -287,7 +287,7 @@ export default function HomePage() {
                   <div className="relative h-56 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={resolveImageUrl(imovel)}
+                      src={resolveImageUrl(imovel.imagens?.[0]?.caminho)}
                       alt={imovel.titulo}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
