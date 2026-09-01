@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
 import { Logo } from '@/components/logo';
-import { Building2, KeyRound, Mail, AlertCircle, ArrowRight, Eye, EyeOff, Sparkles, CheckCircle2, Loader2, UserCheck } from 'lucide-react';
+import { KeyRound, Mail, AlertCircle, ArrowRight, Eye, EyeOff, CheckCircle2, Loader2 } from 'lucide-react';
 import axios from 'axios';
 
 function LoginContent() {
@@ -45,10 +45,6 @@ function LoginContent() {
     }
   };
 
-  const fillTestUser = (testEmail: string) => {
-    setEmail(testEmail);
-    setPassword('password');
-  };
 
   return (
     <div className="min-h-[90vh] flex items-center justify-center py-10 px-4">
