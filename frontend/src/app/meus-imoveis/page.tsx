@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -145,7 +146,7 @@ export default function MeusImoveisPage() {
                   {/* Image */}
                   <div className="relative w-full sm:w-48 h-32 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden shrink-0">
                     {imovel.imagens && imovel.imagens.length > 0 ? (
-                      <Image src={`http://localhost:8000/storage/${imovel.imagens[0].caminho}`} alt="" fill className="object-cover" />
+                      <Image src={resolveImageUrl(imovel.imagens?.[0]?.caminho)} alt="" fill className="object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Building2 className="w-8 h-8 text-slate-300" />

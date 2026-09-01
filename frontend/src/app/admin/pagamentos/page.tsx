@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -225,7 +226,7 @@ export default function AdminPagamentosPage() {
                       <td className="py-3.5 px-4">
                         {pag.comprovativo_caminho ? (
                           <a
-                            href={`http://localhost:8000/storage/${pag.comprovativo_caminho}`}
+                            href={resolveImageUrl(pag.comprovativo_caminho)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-purple-900 rounded-lg text-[11px] font-black hover:bg-purple-200 transition-colors"

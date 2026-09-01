@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -90,14 +91,7 @@ export default function HomePage() {
     return new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 }).format(Number(preco));
   };
 
-  const getImageUrl = (imovel: Imovel) => {
-    if (imovel.imagens && imovel.imagens.length > 0) {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
-      return `${baseUrl}/storage/${imovel.imagens[0].caminho}`;
-    }
-    // High-res Unsplash fallback
-    return 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80';
-  };
+  
 
   return (
     <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -293,7 +287,7 @@ export default function HomePage() {
                   <div className="relative h-56 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={getImageUrl(imovel)}
+                      src={resolveImageUrl(imovel)}
                       alt={imovel.titulo}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

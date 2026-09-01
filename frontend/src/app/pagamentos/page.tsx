@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -328,7 +329,7 @@ export default function PagamentosPage() {
                                 📄 {p.comprovativo_nome_original || 'comprovativo.pdf'}
                               </span>
                               <a
-                                href={`http://localhost:8000/storage/${p.comprovativo_caminho}`}
+                                href={resolveImageUrl(p.comprovativo_caminho)}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="text-xs font-bold text-purple-600 hover:underline"

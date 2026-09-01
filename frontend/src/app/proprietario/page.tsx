@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -204,7 +205,7 @@ export default function ProprietarioDashboardPage() {
                       <Link key={imovel.id} href={`/imoveis/${imovel.id}`} className="group flex gap-4 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-700">
                         <div className="relative w-20 h-20 rounded-xl bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
                           {imovel.imagens && imovel.imagens.length > 0 ? (
-                            <Image src={`http://localhost:8000/storage/${imovel.imagens[0].caminho}`} alt="" fill className="object-cover group-hover:scale-105 transition-transform" />
+                            <Image src={resolveImageUrl(imovel.imagens?.[0]?.caminho)} alt="" fill className="object-cover group-hover:scale-105 transition-transform" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center"><Building2 className="w-6 h-6 text-slate-400" /></div>
                           )}

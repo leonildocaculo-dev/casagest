@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 import { Metadata } from 'next';
 import ImovelDetalheClient from './client';
 
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const descricao = imovel.descricao.substring(0, 160) + '...';
     const preco = new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 }).format(Number(imovel.preco));
     const imageUrl = imovel.imagens && imovel.imagens.length > 0 
-      ? `http://127.0.0.1:8000/storage/${imovel.imagens[0].caminho}` 
+      ? resolveImageUrl(imovel.imagens?.[0]?.caminho) 
       : 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80';
 
     return {

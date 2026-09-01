@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -101,7 +102,7 @@ export default function FavoritosPage() {
                   {imovel.imagens && imovel.imagens.length > 0 ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
-                      src={`http://localhost:8000/storage/${imovel.imagens[0].caminho}`}
+                      src={resolveImageUrl(imovel.imagens?.[0]?.caminho)}
                       alt={imovel.titulo}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

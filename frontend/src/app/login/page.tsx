@@ -175,37 +175,7 @@ function LoginContent() {
               </button>
             </form>
 
-            {/* Quick Demo Fill Buttons */}
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
-              <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">
-                Atalhos de Teste Rápido (Demonstração)
-              </span>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => fillTestUser('cliente@casagest.ao')}
-                  className="px-2.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-purple-100 dark:hover:bg-purple-950 text-slate-700 dark:text-slate-300 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1"
-                >
-                  <UserCheck className="w-3.5 h-3.5 text-purple-600" /> Cliente
-                </button>
 
-                <button
-                  type="button"
-                  onClick={() => fillTestUser('proprietario@casagest.ao')}
-                  className="px-2.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-purple-100 dark:hover:bg-purple-950 text-slate-700 dark:text-slate-300 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1"
-                >
-                  <Building2 className="w-3.5 h-3.5 text-purple-600" /> Proprietário
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => fillTestUser('admin@casagest.ao')}
-                  className="px-2.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-purple-100 dark:hover:bg-purple-950 text-slate-700 dark:text-slate-300 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Admin
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* Footer Register Prompt */}

@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
@@ -157,7 +158,7 @@ function NovaPropostaContent() {
             <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-100 dark:border-slate-800">
               <div className="relative w-16 h-16 bg-slate-200 dark:bg-slate-700 rounded-lg overflow-hidden shrink-0">
                 {imovel.imagens && imovel.imagens.length > 0 ? (
-                  <Image src={`http://localhost:8000/storage/${imovel.imagens[0].caminho}`} alt="" fill className="object-cover" />
+                  <Image src={resolveImageUrl(imovel.imagens?.[0]?.caminho)} alt="" fill className="object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center"><Building2 className="w-6 h-6 text-slate-400" /></div>
                 )}

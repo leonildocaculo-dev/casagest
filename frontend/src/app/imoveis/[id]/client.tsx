@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -193,7 +194,7 @@ export default function ImovelDetalhePage() {
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`http://localhost:8000/storage/${images[currentImage].caminho}`}
+                src={resolveImageUrl(images[currentImage].caminho)}
                 alt={`${imovel.titulo} - Imagem ${currentImage + 1}`}
                 className="w-full h-full object-cover"
               />

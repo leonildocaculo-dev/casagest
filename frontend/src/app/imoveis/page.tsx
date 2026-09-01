@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
@@ -256,7 +257,7 @@ function ImoveisListContent() {
 
   const getImageUrl = (imovel: Imovel) => {
     if (imovel.imagens && imovel.imagens.length > 0) {
-      return `http://localhost:8000/storage/${imovel.imagens[0].caminho}`;
+      return resolveImageUrl(imovel.imagens?.[0]?.caminho);
     }
     return 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80';
   };
@@ -629,7 +630,7 @@ function ImoveisListContent() {
                       <div className="relative h-52 bg-slate-100 dark:bg-slate-800 overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={getImageUrl(imovel)}
+                          src={resolveImageUrl(imovel)}
                           alt={imovel.titulo}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />

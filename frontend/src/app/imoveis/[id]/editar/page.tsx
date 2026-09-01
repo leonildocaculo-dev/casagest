@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -279,7 +280,7 @@ export default function EditarImovelPage() {
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
                 {existingImages.map((img) => (
                   <div key={img.id} className="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
-                    <Image src={`http://localhost:8000/storage/${img.caminho}`} alt="Imóvel" fill className="object-cover" />
+                    <Image src={resolveImageUrl(img.caminho)} alt="Imóvel" fill className="object-cover" />
                     <button
                       type="button"
                       onClick={() => removeExistingImage(img)}

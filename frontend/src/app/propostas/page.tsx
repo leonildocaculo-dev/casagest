@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -192,7 +193,7 @@ export default function PropostasPage() {
                     <div className="flex items-center gap-3">
                       <div className="relative w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
                         {p.imovel?.imagens && p.imovel.imagens.length > 0 ? (
-                          <Image src={`http://localhost:8000/storage/${p.imovel.imagens[0].caminho}`} alt="" fill className="object-cover" />
+                          <Image src={resolveImageUrl(p.imovel.imagens?.[0]?.caminho)} alt="" fill className="object-cover" />
                         ) : (
                           <Building2 className="w-6 h-6 text-slate-400" />
                         )}

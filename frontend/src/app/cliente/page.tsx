@@ -1,3 +1,4 @@
+import { resolveImageUrl } from '@/lib/utils';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -108,7 +109,7 @@ export default function ClienteDashboardPage() {
                       <div className="flex gap-4">
                         <div className="relative w-16 h-16 rounded-xl bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
                           {p.imovel?.imagens && p.imovel.imagens.length > 0 ? (
-                            <Image src={`http://localhost:8000/storage/${p.imovel.imagens[0].caminho}`} alt="" fill className="object-cover" />
+                            <Image src={resolveImageUrl(p.imovel.imagens?.[0]?.caminho)} alt="" fill className="object-cover" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center"><FileText className="w-6 h-6 text-slate-400" /></div>
                           )}
