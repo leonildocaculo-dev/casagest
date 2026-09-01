@@ -58,6 +58,7 @@ interface Imovel {
   imagens: ImovelImagem[];
   proprietario?: { id: number; name: string };
   created_at: string;
+  distancia?: number | string;
 }
 
 interface PaginatedResponse {
@@ -255,12 +256,6 @@ function ImoveisListContent() {
     return new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 }).format(Number(preco));
   };
 
-  const getImageUrl = (imovel: Imovel) => {
-    if (imovel.imagens && imovel.imagens.length > 0) {
-      return resolveImageUrl(imovel.imagens?.[0]?.caminho);
-    }
-    return 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80';
-  };
 
   const getTipoIcon = (t: string) => {
     switch (t) {
@@ -710,9 +705,9 @@ function ImoveisListContent() {
                         </span>
                       </div>
                       <div className="text-right">
-                         {(imovel as any).distancia && (
+                         {imovel.distancia && (
                            <span className="text-[10px] block font-semibold text-slate-500 dark:text-slate-400">
-                             {parseFloat((imovel as any).distancia).toFixed(1)} km de distância
+                             {parseFloat(imovel.distancia.toString()).toFixed(1)} km de distância
                            </span>
                          )}
                          <span className="text-xs font-bold text-purple-600 dark:text-amber-400 group-hover:underline">
