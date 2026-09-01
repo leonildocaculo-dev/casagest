@@ -70,11 +70,11 @@ class ProductionDataSeeder extends Seeder
 
         // 2. Criar 5 Imóveis para Venda
         $vendas = [
-            ['titulo' => 'Vivenda V4 de Luxo em Talatona', 'preco' => 150000000, 'localizacao' => 'Talatona, Luanda', 'descricao' => 'Excelente vivenda com piscina, jardim e garagem para 3 carros.'],
-            ['titulo' => 'Apartamento T3 no Condomínio Belas', 'preco' => 85000000, 'localizacao' => 'Belas, Luanda', 'descricao' => 'Apartamento moderno, segurança 24h e área de lazer.'],
-            ['titulo' => 'Casa V3 no Benfica', 'preco' => 60000000, 'localizacao' => 'Benfica, Luanda', 'descricao' => 'Casa espaçosa, perto da praia e de supermercados.'],
-            ['titulo' => 'Apartamento T2 na Mutamba', 'preco' => 45000000, 'localizacao' => 'Mutamba, Luanda (Centro)', 'descricao' => 'Ideal para quem trabalha no centro. Vista para a baía.'],
-            ['titulo' => 'Vivenda V5 no Patriota', 'preco' => 120000000, 'localizacao' => 'Patriota, Luanda', 'descricao' => 'Alto padrão, acabamentos de luxo e anexo espaçoso.']
+            ['titulo' => 'Vivenda V4 de Luxo em Talatona', 'preco' => 150000000, 'localizacao' => 'Talatona, Luanda', 'descricao' => 'Excelente vivenda com piscina, jardim e garagem para 3 carros.', 'tipo' => 'vivenda'],
+            ['titulo' => 'Apartamento T3 no Condomínio Belas', 'preco' => 85000000, 'localizacao' => 'Belas, Luanda', 'descricao' => 'Apartamento moderno, segurança 24h e área de lazer.', 'tipo' => 'apartamento'],
+            ['titulo' => 'Casa V3 no Benfica', 'preco' => 60000000, 'localizacao' => 'Benfica, Luanda', 'descricao' => 'Casa espaçosa, perto da praia e de supermercados.', 'tipo' => 'vivenda'],
+            ['titulo' => 'Apartamento T2 na Mutamba', 'preco' => 45000000, 'localizacao' => 'Mutamba, Luanda (Centro)', 'descricao' => 'Ideal para quem trabalha no centro. Vista para a baía.', 'tipo' => 'apartamento'],
+            ['titulo' => 'Vivenda V5 no Patriota', 'preco' => 120000000, 'localizacao' => 'Patriota, Luanda', 'descricao' => 'Alto padrão, acabamentos de luxo e anexo espaçoso.', 'tipo' => 'vivenda']
         ];
 
         foreach ($vendas as $index => $venda) {
@@ -82,13 +82,15 @@ class ProductionDataSeeder extends Seeder
                 'proprietario_id' => $proprietario->id,
                 'titulo' => $venda['titulo'],
                 'descricao' => $venda['descricao'],
-                'tipo' => 'venda',
+                'tipo' => $venda['tipo'],
+                'modalidade' => 'venda',
                 'preco' => $venda['preco'],
+                'preco_venda' => $venda['preco'],
                 'localizacao' => $venda['localizacao'],
                 'quartos' => rand(2, 5),
-                'casas_de_banho' => rand(1, 4),
-                'area' => rand(80, 400),
-                'status' => 'disponivel'
+                'casas_banho' => rand(1, 4),
+                'area_m2' => rand(80, 400),
+                'estado' => 'publicado'
             ]);
             ImovelImagem::create([
                 'imovel_id' => $imovel->id,
@@ -98,11 +100,11 @@ class ProductionDataSeeder extends Seeder
 
         // 3. Criar 5 Imóveis para Arrendamento
         $arrendamentos = [
-            ['titulo' => 'Apartamento T1 Mobilado em Talatona', 'preco' => 400000, 'localizacao' => 'Talatona, Luanda', 'descricao' => 'Pronto a habitar, despesas de condomínio incluídas.'],
-            ['titulo' => 'Vivenda V3 no Kilamba', 'preco' => 250000, 'localizacao' => 'Cidade do Kilamba', 'descricao' => 'Excelente localização, perto de escolas e hospitais.'],
-            ['titulo' => 'Apartamento T2 no Zango 0', 'preco' => 150000, 'localizacao' => 'Zango, Viana', 'descricao' => 'Condomínio fechado, água e luz 24h.'],
-            ['titulo' => 'Casa V2 no Nova Vida', 'preco' => 300000, 'localizacao' => 'Projeto Nova Vida', 'descricao' => 'Casa térrea, quintal vasto e anexo.'],
-            ['titulo' => 'Apartamento T3 de Luxo na Ilha do Cabo', 'preco' => 800000, 'localizacao' => 'Ilha de Luanda', 'descricao' => 'Vista mar deslumbrante, varanda espaçosa.']
+            ['titulo' => 'Apartamento T1 Mobilado em Talatona', 'preco' => 400000, 'localizacao' => 'Talatona, Luanda', 'descricao' => 'Pronto a habitar, despesas de condomínio incluídas.', 'tipo' => 'apartamento'],
+            ['titulo' => 'Vivenda V3 no Kilamba', 'preco' => 250000, 'localizacao' => 'Cidade do Kilamba', 'descricao' => 'Excelente localização, perto de escolas e hospitais.', 'tipo' => 'vivenda'],
+            ['titulo' => 'Apartamento T2 no Zango 0', 'preco' => 150000, 'localizacao' => 'Zango, Viana', 'descricao' => 'Condomínio fechado, água e luz 24h.', 'tipo' => 'apartamento'],
+            ['titulo' => 'Casa V2 no Nova Vida', 'preco' => 300000, 'localizacao' => 'Projeto Nova Vida', 'descricao' => 'Casa térrea, quintal vasto e anexo.', 'tipo' => 'vivenda'],
+            ['titulo' => 'Apartamento T3 de Luxo na Ilha do Cabo', 'preco' => 800000, 'localizacao' => 'Ilha de Luanda', 'descricao' => 'Vista mar deslumbrante, varanda espaçosa.', 'tipo' => 'apartamento']
         ];
 
         foreach ($arrendamentos as $index => $arrendamento) {
@@ -110,13 +112,15 @@ class ProductionDataSeeder extends Seeder
                 'proprietario_id' => $proprietario->id,
                 'titulo' => $arrendamento['titulo'],
                 'descricao' => $arrendamento['descricao'],
-                'tipo' => 'arrendamento',
+                'tipo' => $arrendamento['tipo'],
+                'modalidade' => 'arrendamento',
                 'preco' => $arrendamento['preco'],
+                'preco_arrendamento' => $arrendamento['preco'],
                 'localizacao' => $arrendamento['localizacao'],
                 'quartos' => rand(1, 3),
-                'casas_de_banho' => rand(1, 2),
-                'area' => rand(50, 150),
-                'status' => 'disponivel'
+                'casas_banho' => rand(1, 2),
+                'area_m2' => rand(50, 150),
+                'estado' => 'publicado'
             ]);
             ImovelImagem::create([
                 'imovel_id' => $imovel->id,
