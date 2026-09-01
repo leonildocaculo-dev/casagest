@@ -92,7 +92,8 @@ export default function HomePage() {
 
   const getImageUrl = (imovel: Imovel) => {
     if (imovel.imagens && imovel.imagens.length > 0) {
-      return `http://localhost:8000/storage/${imovel.imagens[0].caminho}`;
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
+      return `${baseUrl}/storage/${imovel.imagens[0].caminho}`;
     }
     // High-res Unsplash fallback
     return 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80';
