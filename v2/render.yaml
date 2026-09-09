@@ -1,0 +1,74 @@
+services:
+  # ---------------------------------------------
+  # Backend: API Laravel + WebSockets (Reverb)
+  # ---------------------------------------------
+  - type: web
+    name: casagest-backend-v2
+    runtime: docker
+    region: frankfurt # Região próxima de Angola/Europa (Pode alterar)
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    envVars:
+      - key: APP_NAME
+        value: CasaGest
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        # A Render substitui pelo URL gerado do serviço
+        value: https://casagest-backend-v2.onrender.com 
+      
+      # Base de Dados
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        sync: false # Colocar o valor do Supabase no Dashboard da Render manualmente
+      
+      # Configuração Reverb
+      - key: REVERB_APP_ID
+        value: "999999" # ID genérico
+      - key: REVERB_APP_KEY
+        value: "casagest_reverb_key_2026"
+      - key: REVERB_APP_SECRET
+        generateValue: true
+      - key: REVERB_HOST
+        value: "casagest-backend-v2.onrender.com"
+      - key: REVERB_PORT
+        value: "443"
+      - key: REVERB_SCHEME
+        value: "https"
+
+  # ---------------------------------------------
+  # Frontend: Next.js Web Service
+  # ---------------------------------------------
+  - type: web
+    name: casagest-frontend-v2
+    runtime: node
+    region: frankfurt
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_API_URL
+        value: https://casagest-backend-v2.onrender.com/api
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false # Inserir no Dashboard
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false # Inserir no Dashboard
+      
+      # Reverb no Frontend
+      - key: NEXT_PUBLIC_REVERB_APP_KEY
+        value: "casagest_reverb_key_2026"
+      - key: NEXT_PUBLIC_REVERB_HOST
+        value: "casagest-backend-v2.onrender.com"
+      - key: NEXT_PUBLIC_REVERB_PORT
+        value: "443"
+      - key: NEXT_PUBLIC_REVERB_SCHEME
+        value: "https"
