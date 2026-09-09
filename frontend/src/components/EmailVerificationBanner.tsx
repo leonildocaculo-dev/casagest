@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import { useAuth } from '@/context/auth-context';
@@ -21,9 +21,10 @@ export default function EmailVerificationBanner() {
       const res = await api.post('/email/verification-notification');
       setStatus('success');
       setMessage(res.data.message || 'E-mail enviado com sucesso! Verifique a sua caixa de entrada.');
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus('error');
-      setMessage(err.response?.data?.message || 'Erro ao enviar e-mail. Tente novamente mais tarde.');
+      const axiosErr = err as { response?: { data?: { message?: string } } };
+      setMessage(axiosErr.response?.data?.message || 'Erro ao enviar e-mail. Tente novamente mais tarde.');
     } finally {
       setLoading(false);
     }

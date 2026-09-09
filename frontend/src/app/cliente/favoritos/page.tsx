@@ -22,7 +22,7 @@ interface Imovel {
 }
 
 export default function FavoritosPage() {
-  const { user, favoriteIds, toggleFavorite } = useAuth();
+  const { user, toggleFavorite } = useAuth();
   const router = useRouter();
   const [imoveis, setImoveis] = useState<Imovel[]>([]);
   const [loading, setLoading] = useState(true);

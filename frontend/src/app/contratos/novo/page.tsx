@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { api } from '@/lib/api';
-import { FileCheck, Calendar, ArrowLeft, Loader2, AlertCircle, FileText, CheckCircle2 } from 'lucide-react';
+import { FileCheck, ArrowLeft, Loader2, AlertCircle, FileText, CheckCircle2 } from 'lucide-react';
 
 interface Imovel {
   id: number;
@@ -44,7 +44,7 @@ function NovoContratoForm() {
 
   useEffect(() => {
     if (!propostaId) {
-      setLoadingProposta(false);
+      setTimeout(() => setLoadingProposta(false), 0);
       return;
     }
 
