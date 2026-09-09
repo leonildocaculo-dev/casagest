@@ -33,7 +33,7 @@ export default function EmailVerificationBanner() {
   return (
     <div className="bg-amber-50 dark:bg-amber-900/30 border-l-4 border-amber-500 p-4 mb-6 relative rounded-r-lg">
       <div className="flex">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <AlertCircle className="h-5 w-5 text-amber-500" />
         </div>
         <div className="ml-3 flex-1 md:flex md:justify-between">
