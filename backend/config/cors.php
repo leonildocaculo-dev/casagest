@@ -4,7 +4,7 @@
 |------------------------------------------------------------------------------
 | Cross-Origin Resource Sharing (CORS)
 |------------------------------------------------------------------------------
-| O frontend corre noutro dominio (Cloudflare) e esta API corre no VPS. Sem
+| O frontend corre noutro dominio (Vercel) e esta API corre noutro (Render). Sem
 | esta configuracao correcta o navegador bloqueia todos os pedidos.
 |
 | Regra que nao se quebra: com `supports_credentials => true` — necessario para
@@ -12,8 +12,12 @@
 | `allowed_origins => ['*']`. O navegador rejeita a resposta e o login falha,
 | mesmo que a API responda 200. Por isso a lista e sempre explicita.
 |
-| Em producao a unica origem permitida e FRONTEND_URL. As entradas de
-| localhost so aparecem quando APP_ENV=local.
+| Em producao as origens permitidas sao FRONTEND_URL (podendo conter varias
+| separadas por virgula). As entradas de localhost so aparecem quando
+| APP_ENV=local.
+|
+| ATENCAO: se FRONTEND_URL nao estiver definida, esta lista fica VAZIA e a API
+| bloqueia todos os pedidos do browser sem qualquer mensagem de erro util.
 */
 
 return [
@@ -22,13 +26,23 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => array_values(array_filter([
-        env('FRONTEND_URL'),
-        env('APP_ENV') === 'local' ? 'http://localhost:3000' : null,
-        env('APP_ENV') === 'local' ? 'http://127.0.0.1:3000' : null,
-    ])),
+    'allowed_origins' => array_values(array_filter(array_map('trim', array_merge(
+        explode(',', (string) env('FRONTEND_URL')),
+        env('APP_ENV') === 'local' ? ['http://localhost:3000', 'http://127.0.0.1:3000'] : [],
+    )))),
 
-    'allowed_origins_patterns' => [],
+    /*
+     | Deploys de preview da Vercel recebem um URL diferente a cada commit
+     | (ex.: casagest-git-feature-abc.vercel.app), pelo que nunca coincidem com
+     | FRONTEND_URL. Definir FRONTEND_URL_PATTERN com uma expressao regular
+     | delimitada permite autoriza-los sem abrir a API a qualquer origem.
+     |
+     | Exemplo: FRONTEND_URL_PATTERN='#^https://casagest-[a-z0-9-]+\.vercel\.app$#'
+     */
+    'allowed_origins_patterns' => array_values(array_filter(array_map(
+        'trim',
+        explode(',', (string) env('FRONTEND_URL_PATTERN'))
+    ))),
 
     'allowed_headers' => ['*'],
 

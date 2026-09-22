@@ -37,6 +37,11 @@ COPY . .
 RUN composer dump-autoload --optimize \
     && chown -R www-data:www-data storage bootstrap/cache
 
+# Script de arranque: symlink do storage, limpeza de cache e bind a $PORT
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY supervisord.conf /etc/supervisord.conf
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
