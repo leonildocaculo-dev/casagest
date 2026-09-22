@@ -1,0 +1,8 @@
+backend/
+vendor/
+node_modules/
+_export/
+*.tar.gz
+storage/
+.git/
+Senhas/
