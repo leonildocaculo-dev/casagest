@@ -30,7 +30,9 @@ function LoginContent() {
       router.push(redirectPath);
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        if (err.response?.data?.errors?.email) {
+        if (!err.response) {
+          setError('Não foi possível contactar o servidor. Verifique a sua ligação e tente novamente.');
+        } else if (err.response?.data?.errors?.email) {
           setError(err.response.data.errors.email[0]);
         } else if (err.response?.data?.message) {
           setError(err.response.data.message);

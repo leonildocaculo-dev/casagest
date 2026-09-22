@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+// Normaliza NEXT_PUBLIC_API_URL: aceita o valor com ou sem barra final e com
+// ou sem o sufixo /api (ex.: "https://casagest-api.onrender.com/").
+export const BACKEND_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000')
+  .trim()
+  .replace(/\/+$/, '')
+  .replace(/\/api$/, '');
+
+const API_BASE_URL = `${BACKEND_BASE_URL}/api`;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -23,6 +30,5 @@ api.interceptors.request.use((config) => {
 });
 
 export const getCsrfCookie = async () => {
-  const backendBaseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api').replace(/\/api\/?$/, '');
-  await axios.get(`${backendBaseUrl}/sanctum/csrf-cookie`, { withCredentials: true });
+  await axios.get(`${BACKEND_BASE_URL}/sanctum/csrf-cookie`, { withCredentials: true });
 };
