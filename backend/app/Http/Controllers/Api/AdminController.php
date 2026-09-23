@@ -109,6 +109,53 @@ class AdminController extends Controller
     }
 
     /**
+     * Eliminar definitivamente um utilizador.
+     *
+     * As chaves estrangeiras para users sao cascadeOnDelete: apagar alguem com
+     * contratos ou pagamentos apagaria tambem esse historico financeiro e
+     * legal. Nesses casos recusa-se e sugere-se desativar a conta.
+     */
+    public function destroyUtilizador(Request $request, User $targetUser): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        if (! $user->isAdmin()) {
+            return response()->json(['message' => 'Acesso não autorizado.'], 403);
+        }
+
+        if ($targetUser->id === $user->id) {
+            return response()->json(['message' => 'Não pode eliminar a sua própria conta.'], 422);
+        }
+
+        if ($targetUser->isAdmin() && User::where('role', 'admin')->count() <= 1) {
+            return response()->json(['message' => 'Não é possível eliminar o último administrador.'], 422);
+        }
+
+        $temContratos = Contrato::where('cliente_id', $targetUser->id)
+            ->orWhere('proprietario_id', $targetUser->id)
+            ->exists();
+        $temPagamentos = \App\Models\Pagamento::where('cliente_id', $targetUser->id)->exists();
+
+        if ($temContratos || $temPagamentos) {
+            return response()->json([
+                'message' => 'Este utilizador tem contratos ou pagamentos associados e não pode ser eliminado. Desative a conta em vez disso.',
+            ], 422);
+        }
+
+        $dados = ['name' => $targetUser->name, 'email' => $targetUser->email, 'role' => $targetUser->role];
+
+        DB::transaction(function () use ($targetUser) {
+            $targetUser->tokens()->delete();
+            $targetUser->delete();
+        });
+
+        \App\Services\AuditLogService::log('eliminacao_utilizador', $user->id, 'User', $targetUser->id, $dados);
+
+        return response()->json(['message' => "Utilizador {$dados['name']} eliminado com sucesso."]);
+    }
+
+    /**
      * Listar Logs de Auditoria do Sistema.
      */
     public function auditLogs(Request $request): JsonResponse

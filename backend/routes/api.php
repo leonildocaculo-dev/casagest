@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\Api\AdminController::class, 'dashboard']);
     Route::get('/admin/utilizadores', [\App\Http\Controllers\Api\AdminController::class, 'utilizadores']);
     Route::post('/admin/utilizadores/{targetUser}/status', [\App\Http\Controllers\Api\AdminController::class, 'toggleStatus']);
+    Route::delete('/admin/utilizadores/{targetUser}', [\App\Http\Controllers\Api\AdminController::class, 'destroyUtilizador']);
     Route::get('/admin/audit-logs', [\App\Http\Controllers\Api\AdminController::class, 'auditLogs']);
     Route::get('/admin/contactos', [\App\Http\Controllers\Api\ContactoController::class, 'index']);
     Route::get('/admin/relatorios/imoveis/export', [\App\Http\Controllers\Api\AdminController::class, 'exportImoveis']);
