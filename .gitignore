@@ -6,3 +6,7 @@ Senhas/
 node_modules/
 vendor/
 
+
+.vercel
+.env*
+!.env.example

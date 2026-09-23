@@ -6,3 +6,6 @@ _export/
 storage/
 .git/
 Senhas/
+.next/
+.env.local
+.env.vercel

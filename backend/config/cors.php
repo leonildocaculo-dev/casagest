@@ -38,10 +38,16 @@ return [
      | delimitada permite autoriza-los sem abrir a API a qualquer origem.
      |
      | Exemplo: FRONTEND_URL_PATTERN='#^https://casagest-[a-z0-9-]+\.vercel\.app$#'
+     |
+     | Sem FRONTEND_URL_PATTERN, aceitam-se por omissao os deploys da equipa
+     | caculo-tech (ex.: casagest-git-main-caculo-tech.vercel.app).
      */
     'allowed_origins_patterns' => array_values(array_filter(array_map(
         'trim',
-        explode(',', (string) env('FRONTEND_URL_PATTERN'))
+        explode(',', (string) env(
+            'FRONTEND_URL_PATTERN',
+            '#^https://casagest-[a-z0-9-]+-caculo-tech\.vercel\.app$#'
+        ))
     ))),
 
     'allowed_headers' => ['*'],
